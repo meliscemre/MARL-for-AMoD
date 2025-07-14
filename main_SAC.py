@@ -122,7 +122,7 @@ class GNNParser:
                     .float(),
 
 
-                    # Current average price (can be improved to use mean if needed)
+                    # Own origin sum prices
                     #torch.tensor(
                     #    [
                     #        sum(
@@ -146,34 +146,6 @@ class GNNParser:
                         ]
                     ).view(1, len(region), len(region)).float()
                     
-
-                    #torch.tensor(
-                    #    [
-                    #        sum(
-                    #            [
-                    #                self.env.price_agents[opponent_id][i, j].get(time, 0) * self.s
-                    #                for j in self.env.region
-                    #            ]
-                    #        )
-                    #        for i in self.env.region
-                    #    ]
-                    #)
-                    #.view(1, 1, len(self.env.region))
-                    #.float()
-                    
-                    #torch.tensor(
-                    #    [
-                    #        sum(
-                    #            [
-                    #                opponent_price[i, j].get(time, 0) * s
-                    #                for j in region
-                    #            ]
-                    #        )
-                    #        for i in region
-                    #    ]
-                    #)
-                    #.view(1, 1, len(region))
-                    #.float(),
                 ),
                 dim=1,
             )

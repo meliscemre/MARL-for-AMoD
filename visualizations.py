@@ -99,7 +99,7 @@ def plot_mean_price_scalar_per_region(price_steps, geojson_path="data/nyc_zones.
     n_episodes = len(price_steps)
     mean_prices = {i: v / n_episodes for i, v in price_totals.items()}
 
-    # Load geojson
+   
     nyc_zones = gpd.read_file(geojson_path).to_crs(epsg=4326)
     bk_zones = nyc_zones[nyc_zones['districtcode'].astype(str).isin(district_codes)].copy()
     bk_zones["districtcode"] = bk_zones["districtcode"].astype(str)
@@ -109,7 +109,7 @@ def plot_mean_price_scalar_per_region(price_steps, geojson_path="data/nyc_zones.
         for r in mean_prices if r in region_to_district
     }).fillna(0)
 
-    # Plot
+
     fig, ax = plt.subplots(figsize=(12, 10))
     bk_zones.plot(
         column="price_scalar",
@@ -120,7 +120,6 @@ def plot_mean_price_scalar_per_region(price_steps, geojson_path="data/nyc_zones.
         ax=ax
     )
 
-    # Optional text annotations
     for idx, row in bk_zones.iterrows():
         if row["price_scalar"] > 0 and row["geometry"].centroid.is_valid:
             centroid = row["geometry"].centroid

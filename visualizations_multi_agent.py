@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 import numpy as np
 
-# Region ↔ District mapping
 region_to_district = {
     0: "301", 1: "302", 2: "303", 3: "304", 4: "305", 5: "308",
     6: "309", 7: "316", 8: "317", 9: "306", 10: "307", 11: "310",
@@ -18,7 +17,6 @@ def plot_mean_rebalancing_per_region_agents(
     """
     Plot mean rebalancing arrivals per region for both agents with shared color scale.
     """
-    # Compute per-agent rebalance totals
     reb_agent_data = {}
     for agent_id, reb_steps in zip([0, 1], [reb_steps_agent0, reb_steps_agent1]):
         region_arrivals = defaultdict(float)
@@ -28,11 +26,11 @@ def plot_mean_rebalancing_per_region_agents(
         n_episodes = len(reb_steps)
         reb_agent_data[agent_id] = {k: v / n_episodes for k, v in region_arrivals.items()}
 
-    # Shared vmin/vmax for colormap
+
     all_vals = list(reb_agent_data[0].values()) + list(reb_agent_data[1].values())
     vmin, vmax = min(all_vals), max(all_vals)
 
-    # Load and prepare map
+
     gdf = gpd.read_file(geojson_path).to_crs(epsg=4326)
     gdf = gdf[gdf["districtcode"].astype(str).isin(district_codes)].copy()
     gdf["districtcode"] = gdf["districtcode"].astype(str)
@@ -70,11 +68,10 @@ def plot_mean_accepted_demand_per_region_agents(
         n_episodes = len(demand_steps)
         demand_agent_data[agent_id] = {k: v / n_episodes for k, v in region_departures.items()}
 
-    # Shared vmin/vmax
+  
     all_vals = list(demand_agent_data[0].values()) + list(demand_agent_data[1].values())
     vmin, vmax = min(all_vals), max(all_vals)
 
-    # Load and prepare map
     gdf = gpd.read_file(geojson_path).to_crs(epsg=4326)
     gdf = gdf[gdf["districtcode"].astype(str).isin(district_codes)].copy()
     gdf["districtcode"] = gdf["districtcode"].astype(str)
